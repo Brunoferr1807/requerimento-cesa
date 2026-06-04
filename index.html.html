@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Requerimento — CESA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+/* ════════════════════════════════════════
+   TOKENS
+════════════════════════════════════════ */
+:root {
+  --navy:      #0d1b2a;
+  --navy-mid:  #1e3048;
+  --navy-soft: #2e4a6a;
+  --silver:    #d0d8e0;
+  --silver-lt: #edf1f5;
+  --silver-dk: #9aaabb;
+  --lime:      #6fcf2a;
+  --lime-dk:   #52a31f;
+  --lime-lt:   #b5e87e;
+  --white:     #ffffff;
+  --paper:     #f4f7fa;
+  --line:      #d8e2ec;
+  --text-main: #0d1b2a;
+  --text-soft: #4a637a;
+  --r:         14px;
+  --r-lg:      20px;
+  --shadow:    0 2px 16px rgba(13,27,42,.10);
+  --shadow-lg: 0 8px 40px rgba(13,27,42,.16);
+}
+
+/* ════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 0;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(111,207,42,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(13,27,42,.06) 0%, transparent 55%);
+}
+
+/* ════════════════════════════════════════
+   TOPO
+════════════════════════════════════════ */
+.topbar {
+  background: var(--navy);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(13,27,42,.3);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar-logo {
+  width: 38px;
+  height: 38px;
+  background: var(--lime);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'Playfair Display', serif;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+}
+
+.topbar-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar-name span:first-child {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+
+.topbar-name span:last-child {
+  font-size: 11px;
+  color: var(--silver-dk);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.topbar-date {
+  font-size: 12px;
+  color: var(--silver-dk);
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+/* ════════════════════════════════════════
+   LAYOUT CENTRAL
+════════════════════════════════════════ */
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+}
+
+/* ════════════════════════════════════════
+   AVISO DE PRAZO
+════════════════════════════════════════ */
+.prazo-banner {
+  background: var(--navy);
+  border-radius: var(--r);
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  border: 1px solid var(--navy-mid);
+}
+
+.prazo-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(111,207,42,.15);
+  border: 1.5px solid rgba(111,207,42,.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.prazo-text p:first-child {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lime);
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.prazo-text p:last-child {
+  font-size: 13px;
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ════════════════════════════════════════
+   CARD PRINCIPAL
+════════════════════════════════════════ */
+.card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(111,207,42,.12);
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  right: 20px; top: 20px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(111,207,42,.08);
+}
+
+.card-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.card-header p {
+  font-size: 13px;
+  color: var(--silver-dk);
+  font-weight: 300;
+  position: relative;
+}
+
+.card-body {
+  padding: 32px;
+}
+
+/* ════════════════════════════════════════
+   SEÇÃO DIVIDER
+════════════════════════════════════════ */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.section-head:not(:first-child) { margin-top: 32px; }
+
+.section-pill {
+  background: var(--navy);
+  color: var(--lime);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ════════════════════════════════════════
+   GRADE DO FORMULÁRIO
+   3 colunas no tablet 10" para manter
+   campos visíveis com teclado aberto
+════════════════════════════════════════ */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.fg-full { grid-column: 1 / -1; }
+.fg-2    { grid-column: span 2; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  user-select: none;
+}
+
+label .req { color: var(--lime-dk); margin-left: 1px; }
+
+/* ── Inputs comuns ──
+   font-size 16px evita zoom automático no Android ao focar */
+input, select, textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-main);
+  background: var(--silver-lt);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  -webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--lime);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(111,207,42,.15);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--silver-dk);
+  font-weight: 300;
+}
+
+/* Select custom arrow */
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236fcf2a' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 38px;
+}
+
+/* Textarea menor: campo fica visível mesmo com teclado aberto */
+textarea {
+  resize: none;
+  min-height: 130px;
+  line-height: 1.65;
+}
+
+.char-hint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -4px;
+}
+
+.char-hint span {
+  font-size: 11px;
+  color: var(--silver-dk);
+}
+
+#charCount { transition: color .2s; }
+#charCount.near { color: #e07b39; }
+#charCount.full { color: #c0392b; }
+
+/* ════════════════════════════════════════
+   BOTÃO ENVIAR
+════════════════════════════════════════ */
+.btn-wrap { margin-top: 28px; }
+
+.btn-submit {
+  width: 100%;
+  padding: 17px 24px;
+  background: linear-gradient(135deg, var(--lime-dk) 0%, var(--lime) 100%);
+  color: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+  box-shadow: 0 4px 18px rgba(111,207,42,.35);
+  touch-action: manipulation;
+}
+
+.btn-submit:hover  { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(111,207,42,.45); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { opacity: .55; cursor: not-allowed; transform: none !important; }
+
+.btn-icon { font-size: 18px; }
+
+/* Spinner */
+.spin {
+  width: 18px; height: 18px;
+  border: 2.5px solid rgba(13,27,42,.25);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: rotar .65s linear infinite;
+}
+@keyframes rotar { to { transform: rotate(360deg); } }
+
+/* ════════════════════════════════════════
+   MENSAGEM DE ERRO INLINE
+════════════════════════════════════════ */
+.msg-erro {
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff4f4;
+  border: 1.5px solid #f5c0c0;
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-top: 16px;
+  animation: slideUp .3s ease;
+}
+
+.msg-erro.show { display: flex; }
+
+.msg-erro-icon { font-size: 20px; flex-shrink: 0; }
+
+.msg-erro-text {
+  font-size: 13px;
+  color: #8b1a1a;
+  line-height: 1.55;
+}
+
+.msg-erro-text strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* ════════════════════════════════════════
+   TELA DE SUCESSO
+════════════════════════════════════════ */
+#telaSuccesso {
+  display: none;
+}
+
+.success-wrap {
+  padding: 56px 32px 48px;
+  text-align: center;
+}
+
+.success-anim {
+  width: 84px; height: 84px;
+  background: linear-gradient(135deg, var(--lime-dk), var(--lime));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 32px rgba(111,207,42,.35);
+  animation: pop .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes pop {
+  from { transform: scale(.3); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+.success-wrap h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.success-wrap p {
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+
+.success-email {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--silver-lt);
+  border: 1px solid var(--line);
+  padding: 4px 14px;
+  border-radius: 8px;
+  margin: 4px 0 8px;
+  word-break: break-all;
+}
+
+.prazo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--navy);
+  color: var(--lime);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 30px;
+  margin-top: 16px;
+  letter-spacing: 0.3px;
+}
+
+.btn-novo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 14px 32px;
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background .2s;
+  touch-action: manipulation;
+}
+
+.btn-novo:hover { background: var(--navy-mid); }
+
+/* ════════════════════════════════════════
+   ANIMAÇÕES GERAIS
+════════════════════════════════════════ */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: slideUp .45s ease both;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVO
+════════════════════════════════════════ */
+
+/* Tablet pequeno ou celular grande */
+@media (max-width: 700px) {
+  .topbar { padding: 0 20px; }
+  .container { padding: 20px 14px 48px; }
+  .card-body { padding: 20px 18px 40px; }
+  .card-header { padding: 20px 22px; }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .fg-2 { grid-column: 1 / -1; }
+}
+
+/* Celular estreito */
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .fg-2 { grid-column: 1 / -1; }
+}
+
+/* Elimina highlight azul ao tocar no Android */
+input, select, textarea, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Espaço extra no final para o campo não ficar atrás do teclado */
+.card-body { padding-bottom: 40px; }
+</style>
+</head>
+<body>
+
+<!-- ══ BARRA SUPERIOR ══════════════════════════════════ -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">C</div>
+    <div class="topbar-name">
+      <span>CESA</span>
+      <span>Centro de Estudos da Saúde</span>
+    </div>
+  </div>
+  <div class="topbar-date" id="topDate"></div>
+</div>
+
+<!-- ══ CONTEÚDO CENTRAL ════════════════════════════════ -->
+<div class="container">
+
+  <!-- Aviso de prazo -->
+  <div class="prazo-banner fade-in">
+    <div class="prazo-icon">🕐</div>
+    <div class="prazo-text">
+      <p>PRAZO DE RESPOSTA: ATÉ 3 DIAS ÚTEIS</p>
+      <p>Preencha o formulário abaixo. A resposta será enviada ao seu e-mail pela secretaria acadêmica.</p>
+    </div>
+  </div>
+
+  <!-- ══ FORMULÁRIO ══════════════════════════════════== -->
+  <div class="card fade-in" id="telaForm">
+
+    <div class="card-header">
+      <h2>Requerimento Acadêmico</h2>
+      <p>Secretaria Acadêmica — CESA</p>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Dados do aluno -->
+      <div class="section-head">
+        <div class="section-pill">Dados do Aluno</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="form-grid">
+
+        <!-- Nome: linha inteira -->
+        <div class="form-group fg-full">
+          <label>Nome Completo <span class="req">*</span></label>
+          <input type="text" id="nome" placeholder="Digite seu nome completo"
+                 autocomplete="off" autocorrect="off" spellcheck="false"
+                 inputmode="text" enterkeyhint="next">
+        </div>
+
+        <!-- Curso: 2 colunas | Turno: 1 coluna -->
+        <div class="form-group fg-2">
+          <label>Curso <span class="req">*</span></label>
+          <select id="curso">
+            <option value="">Selecione o curso</option>
+            <optgroup label="Cursos Técnicos">
+              <option>Técnico em Enfermagem</option>
+              <option>Técnico em Nutrição</option>
+              <option>Técnico em Farmácia</option>
+              <option>Técnico em Radiologia</option>
+              <option>Técnico em Análises Clínicas</option>
+            </optgroup>
+            <optgroup label="Especialização">
+              <option>Especialização em UTI</option>
+              <option>Especialização em Enfermagem do Trabalho</option>
+              <option>Especialização em Instrumentação Cirúrgica</option>
+            </optgroup>
+            <optgroup label="Qualificação Profissional">
+              <option>Maqueiro</option>
+              <option>APH — Atendimento Pré-Hospitalar</option>
+              <option>Nefrologia</option>
+              <option>Sala de Vacina</option>
+              <option>Administração de Medicamentos</option>
+              <option>Flebotomia</option>
+              <option>Cuidador de Idosos</option>
+              <option>Mamografia</option>
+              <option>Arco Cirúrgico</option>
+              <option>Curativos e Ostomias</option>
+              <option>Home Care</option>
+              <option>Atualização em Enfermagem</option>
+            </optgroup>
+            <optgroup label="Terapias Integrativas">
+              <option>Massoterapia</option>
+              <option>Ventosa Terapia</option>
+              <option>Drenagem Linfática</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Turno <span class="req">*</span></label>
+          <select id="turno">
+            <option value="">Selecione o turno</option>
+            <option>Manhã</option>
+            <option>Tarde</option>
+            <option>Noite</option>
+            <option>Integral</option>
+            <option>EAD / Online</option>
+          </select>
+        </div>
+
+        <!-- Data: 1 coluna | E-mail: 2 colunas -->
+        <div class="form-group">
+          <label>Data <span class="req">*</span></label>
+          <input type="date" id="data">
+        </div>
+
+        <div class="form-group fg-2">
+          <label>E-mail para Resposta <span class="req">*</span></label>
+          <input type="email" id="email"
+                 placeholder="seuemail@exemplo.com"
+                 autocomplete="off" autocorrect="off"
+                 autocapitalize="off" spellcheck="false"
+                 inputmode="email" enterkeyhint="next">
+        </div>
+
+      </div><!-- /form-grid -->
+
+      <!-- Solicitação -->
+      <div class="section-head">
+        <div class="section-pill">Solicitação</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Descreva o que você requer <span class="req">*</span></label>
+        <textarea id="descricao"
+                  placeholder="Descreva detalhadamente sua solicitação…"
+                  maxlength="2000"
+                  oninput="atualizarContador()"></textarea>
+        <div class="char-hint">
+          <span>Mínimo de 20 caracteres</span>
+          <span><span id="charCount">0</span> / 2000</span>
+        </div>
+      </div>
+
+      <!-- Botão -->
+      <div class="btn-wrap">
+        <button class="btn-submit" id="btnEnviar" onclick="enviar()">
+          <span class="btn-icon">📨</span>
+          <span id="btnLabel">Enviar Requerimento</span>
+        </button>
+      </div>
+
+      <!-- Mensagem de erro -->
+      <div class="msg-erro" id="msgErro">
+        <span class="msg-erro-icon">⚠️</span>
+        <div class="msg-erro-text">
+          <strong>Não foi possível enviar</strong>
+          <span id="erroMsg">Verifique os campos e tente novamente.</span>
+        </div>
+      </div>
+
+    </div><!-- /card-body -->
+  </div><!-- /card form -->
+
+
+  <!-- ══ TELA SUCESSO ════════════════════════════════== -->
+  <div class="card fade-in" id="telaSuccesso">
+    <div class="success-wrap">
+      <div class="success-anim">✓</div>
+      <h2>Requerimento Enviado!</h2>
+      <p>Seu requerimento foi recebido pela secretaria.</p>
+      <p>A resposta será enviada para</p>
+      <div class="success-email" id="emailConfirm"></div>
+      <br>
+      <p style="font-size:13px; color:var(--silver-dk)">Guarde este prazo:</p>
+      <div class="prazo-chip">⏱ Até 3 dias úteis para resposta</div>
+      <br><br>
+      <button class="btn-novo" onclick="novoRequerimento()">＋&nbsp; Novo Requerimento</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     ⚙️  CONFIGURAÇÃO — edite apenas este bloco
+════════════════════════════════════════════════════════ -->
+<script>
+const CONFIG = {
+  // 1. Crie conta gratuita em https://emailjs.com
+  // 2. Adicione um serviço de e-mail (Gmail da secretaria)
+  // 3. Crie um template com as variáveis abaixo
+  // 4. Cole as chaves aqui:
+  emailJS_publicKey:  "SUA_PUBLIC_KEY_EMAILJS",    // ← Account > API Keys
+  emailJS_serviceID:  "SUA_SERVICE_ID",             // ← Email Services > Service ID
+  emailJS_templateID: "SUA_TEMPLATE_ID",            // ← Email Templates > Template ID
+  emailDestino:       "secretaria@cesasaude.com.br" // ← e-mail que RECEBE os requerimentos
+};
+</script>
+<!-- ══════════════════════════════════════════════════════ -->
+
+
+<script>
+/* ── Inicializa EmailJS ── */
+emailjs.init(CONFIG.emailJS_publicKey);
+
+/* ── Scroll automático ao focar em campo (Android)
+   Garante que o campo ativo fique visível acima do teclado ── */
+(function() {
+  const campos = document.querySelectorAll('input, select, textarea');
+  campos.forEach(function(el) {
+    el.addEventListener('focus', function() {
+      // Aguarda o teclado subir (~400ms no Android) e então rola
+      setTimeout(function() {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    });
+  });
+})();
+
+/* ── Data de hoje no topo e no campo data ── */
+(function() {
+  const hoje = new Date();
+  document.getElementById('topDate').textContent =
+    hoje.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('data').value =
+    `${hoje.getFullYear()}-${pad(hoje.getMonth()+1)}-${pad(hoje.getDate())}`;
+})();
+
+/* ── Contador de caracteres ── */
+function atualizarContador() {
+  const len = document.getElementById('descricao').value.length;
+  const el  = document.getElementById('charCount');
+  el.textContent = len;
+  el.className = len >= 2000 ? 'full' : len >= 1800 ? 'near' : '';
+}
+
+/* ── Utilitários ── */
+function erro(msg) {
+  const el = document.getElementById('msgErro');
+  document.getElementById('erroMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 7000);
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('btnEnviar');
+  const lbl = document.getElementById('btnLabel');
+  btn.disabled = on;
+  lbl.textContent = on ? 'Enviando…' : 'Enviar Requerimento';
+  const sp = btn.querySelector('.spin');
+  if (on && !sp) {
+    const d = document.createElement('div');
+    d.className = 'spin';
+    btn.insertBefore(d, btn.firstChild);
+  } else if (!on && sp) {
+    sp.remove();
+  }
+}
+
+/* ── Envio principal ── */
+async function enviar() {
+  document.getElementById('msgErro').classList.remove('show');
+
+  const nome      = document.getElementById('nome').value.trim();
+  const curso     = document.getElementById('curso').value;
+  const turno     = document.getElementById('turno').value;
+  const data      = document.getElementById('data').value;
+  const email     = document.getElementById('email').value.trim();
+  const descricao = document.getElementById('descricao').value.trim();
+
+  // Validações
+  if (!nome || nome.split(' ').length < 2)
+    return erro('Informe seu nome completo (nome e sobrenome).');
+  if (!curso)     return erro('Selecione o curso.');
+  if (!turno)     return erro('Selecione o turno.');
+  if (!data)      return erro('Informe a data.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return erro('Informe um e-mail válido para receber a resposta.');
+  if (descricao.length < 20)
+    return erro('Descreva sua solicitação com pelo menos 20 caracteres.');
+
+  // Formata data para exibição
+  const [y,m,d] = data.split('-');
+  const dataFmt = `${d}/${m}/${y}`;
+
+  const params = {
+    to_email:    CONFIG.emailDestino,
+    reply_to:    email,
+    aluno_nome:  nome,
+    aluno_curso: curso,
+    aluno_turno: turno,
+    aluno_data:  dataFmt,
+    aluno_email: email,
+    descricao:   descricao,
+    data_envio:  new Date().toLocaleString('pt-BR')
+  };
+
+  setLoading(true);
+  try {
+    await emailjs.send(CONFIG.emailJS_serviceID, CONFIG.emailJS_templateID, params);
+    // Sucesso
+    document.getElementById('emailConfirm').textContent = email;
+    document.getElementById('telaForm').style.display = 'none';
+    document.getElementById('telaSuccesso').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch(e) {
+    console.error(e);
+    erro('Falha ao enviar. Verifique a conexão Wi-Fi e tente novamente.');
+  } finally {
+    setLoading(false);
+  }
+}
+
+/* ── Limpar para novo requerimento ── */
+function novoRequerimento() {
+  ['nome','email','descricao'].forEach(id => document.getElementById(id).value = '');
+  ['curso','turno'].forEach(id => document.getElementById(id).value = '');
+  const hoje = new Date();
+  const pad  = n => String(n).padStart(2,'0');
+  document.getElementById('data').value =
+    `${hoje.getFullYear()}-${pad(hoje.getMonth()+1)}-${pad(hoje.getDate())}`;
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('telaSuccesso').style.display = 'none';
+  document.getElementById('telaForm').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
